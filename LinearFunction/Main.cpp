@@ -2,7 +2,7 @@
 using namespace std;
 
 void menu();
-void determineFunction(double initialBalance, double rateOfChange);
+void printFunction(double initialBalance, double rateOfChange);
 void menu2(bool &balanceSet, bool &rateSet, bool &continueProgram, double initialBalance, double rateOfChange);
 double getSolutionFx(double initialBalance, double rateOfChange, double fx);
 double getSolutionX(double initialBalance, double rateOfChange, double x);
@@ -89,14 +89,14 @@ void menu() {
 		} while (!balanceSet && !rateSet && continueProgram);
 
 		if (balanceSet && rateSet) {
-			determineFunction(initialBalance, rateOfChange);
+			printFunction(initialBalance, rateOfChange);
 			menu2(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
 		}
 
 	} while (continueProgram);
 }
 
-void determineFunction(double initialBalance, double rateOfChange) {
+void printFunction(double initialBalance, double rateOfChange) {
 	cout << "\n\t\t\tF(x) = " << rateOfChange << "x + " << initialBalance << "\n\n";
 }
 
