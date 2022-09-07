@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 /********** VARIABLE DECLARATIONS **********/
@@ -158,33 +159,33 @@ void generateProblem() {
 	double fx = 1 + (rand() % 10000);
 	double x = 1 + (rand() % 1000);
 	double b = 1 + (rand() % 30000);
-	double m = 1 + (rand() % 100);
+	double m = (1 + (rand() % 10))/2.5;
 	double solution = 0.0;
 
 	switch (selection) {
 	case 1:
-		cout << "\n\t\tSolve for F(x): ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\t\tSolve for F(x): ";
 		cout << "\n\n\t\t\tF(x) = " << m << "(" << x << ") + " << b << "\n\n";
 		cout << "\n\t\t\tSolution: ";
 		cin >> solution;
 		cout << "\n\n";
 		break;
 	case 2:
-		cout << "\n\t\tSolve for x: ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\t\tSolve for x: ";
 		cout << "\n\n\t\t\t" << fx << " = " << m << "(x) + " << b << "\n\n";
 		cout << "\n\t\t\tSolution: ";
 		cin >> solution;
 		cout << "\n\n";
 		break;
 	case 3:
-		cout << "\n\t\tSolve for b: ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\t\tSolve for b: ";
 		cout << "\n\n\t\t\t" << fx << " = " << m << "(" << x << ") + " << "b" << "\n\n";
 		cout << "\n\t\t\tSolution: ";
 		cin >> solution;
 		cout << "\n\n";
 		break;
 	case 4:
-		cout << "\n\t\tSolve for m: ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\t\tSolve for m: ";
 		cout << "\n\n\t\t\t" << fx << " = " << "m" << "(" << x << ") + " << b << "\n\n";
 		cout << "\n\t\t\tSolution: ";
 		cin >> solution;
@@ -197,25 +198,26 @@ void generateProblem() {
 }
 
 void checkSolution(double fx, double x, double b, double m, int selection, double solution) {
-	double solvedProblem = 0.0;
+	double solvedProblem = 0;
 	bool correct = false;
+	double roundedSolution = round(solution);
 
 	switch (selection) {
 	case 1:
-		solvedProblem = (m * x) + b;
-		correct = solvedProblem == solution;
+		solvedProblem = round((m * x) + b);
+		correct = solvedProblem == roundedSolution;
 		break;
 	case 2:
-		solvedProblem = (fx - b) / m;
-		correct = solvedProblem == solution;
+		solvedProblem = round((fx - b) / m);
+		correct = solvedProblem == roundedSolution;
 		break;
 	case 3:
-		solvedProblem = fx / (m * x);
-		correct = solvedProblem == solution;
+		solvedProblem = round(fx - (m * x));
+		correct = solvedProblem == roundedSolution;
 		break;
 	case 4:
-		solvedProblem = (fx - b) / x;
-		correct = solvedProblem == solution;
+		solvedProblem = round((fx - b) / x);
+		correct = solvedProblem == roundedSolution;
 		break;
 	}
 
