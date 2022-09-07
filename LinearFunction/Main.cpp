@@ -1,102 +1,70 @@
 #include <iostream>
 using namespace std;
 
-void menu();
-void printFunction(double initialBalance, double rateOfChange);
-void menu2(bool &balanceSet, bool &rateSet, bool &continueProgram, double initialBalance, double rateOfChange);
+/********** VARIABLE DECLARATIONS **********/
+
+void menu1();
+void printFunction();
+void menu2(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange);
 double getSolutionFx(double initialBalance, double rateOfChange, double fx);
 double getSolutionX(double initialBalance, double rateOfChange, double x);
+void generateProblem();
+void checkSolution(double fx, double x, double b, double m, int selection, double solution);
+void menu3(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange);
+
+/********** MAIN **********/
 
 int main() {
-	menu();
+	menu1();
 
 	return 0;
 }
 
-void menu() {
+/********** FUNCTION DEFINITIONS **********/
+
+void menu1() {
 	bool continueProgram = true;
-	char currentSelection;
-	double initialBalance = 0.0;
-	double rateOfChange = 0.0;
-	bool balanceSet = false;
-	bool rateSet = false;
+	char menu1Selection;
 
 	do {
-		
-		if (!balanceSet && !rateSet) {
-			cout << "\n\tWelcome! This program will accept your arguments and determine the appropriate Linear Function.\n";
-			cout << "\tLets get started!\n";
-		}
 
-		cout << "\n\tPlease select from the following questions to respond to:\n";
-
-		if (!balanceSet) {
-			cout << "\n\t\tA. What is the initial balance of your function?";
-		}
-
-		if (!rateSet) {
-			cout << "\n\t\tB. By what rate will your function change?";
-		}
-
-		cout << "\n\t\tC. Exit Program.\n";
+		cout << "\n\tWelcome! This program can accept your arguments and determine the appropriate Linear Function,\n\tor generate a random linear equation for you to solve!\n";
+		cout << "\tLets get started!\n";
+		cout << "\n\tPlease select from the following:\n";
+		cout << "\n\t\t1. Create a Linear Function.";
+		cout << "\n\t\t2. Test yourself! Generate a random function and solve.";
+		cout << "\n\t\t3. Exit Program.\n";
 		cout << "\n\t\tSelection: ";
+		cin >> menu1Selection;
 
-		cin >> currentSelection;
-
-		do {
-			switch (currentSelection) {
-			case 'A':
-				cout << "\n\n\t\tPlease input your initial balance as an integer: ";
-				cin >> initialBalance;
-				cout << '\n';
-
-				balanceSet = true;
-
-				break;
-			case 'a':
-				cout << "\n\n\t\tPlease input your initial balance as an integer: ";
-				cin >> initialBalance;
-				cout << '\n';
-				
-				balanceSet = true;
-
-				break;
-			case 'B':
-				cout << "\n\n\t\tPlease input your rate of change as an integer: ";
-				cin >> rateOfChange;
-				cout << '\n';
-
-				rateSet = true;
-
-				break;
-			case 'b':
-				cout << "\n\n\t\tPlease input your rate of change as an integer: ";
-				cin >> rateOfChange;
-				cout << '\n';
-
-				rateSet = true;
-
-				break;
-			case 'C':
-				cout << "\t\t\n\nEXITING PROGRAM.\n\n";
-				continueProgram = false;
-				break;
-			case 'c':
-				cout << "\t\t\n\nEXITING PROGRAM.\n\n";
-				continueProgram = false;
-				break;
-			}
-		} while (!balanceSet && !rateSet && continueProgram);
-
-		if (balanceSet && rateSet) {
-			printFunction(initialBalance, rateOfChange);
-			menu2(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
+		switch (menu1Selection) {
+		case '1':
+			printFunction();
+			break;
+		case '2':
+			generateProblem();
+			break;
+		case '3':
+			cout << "\t\t\n\nEXITING PROGRAM.\n\n";
+			continueProgram = false;
+			break;
 		}
 
 	} while (continueProgram);
 }
 
-void printFunction(double initialBalance, double rateOfChange) {
+void printFunction() {
+	double initialBalance;
+	double rateOfChange;
+
+	cout << "\n\n\t\tPlease input your initial balance as an integer: ";
+	cin >> initialBalance;
+	cout << '\n';
+
+	cout << "\n\n\t\tPlease input your rate of change as an integer: ";
+	cin >> rateOfChange;
+	cout << '\n';
+
 	cout << "\n\t\t\tF(x) = " << rateOfChange << "x + " << initialBalance << "\n\n";
 }
 
@@ -119,20 +87,7 @@ void menu2(bool& balanceSet, bool& rateSet, bool& continueProgram, double initia
 		cin >> fx;
 
 		cout << "\n\t\t\tx = " << getSolutionFx(initialBalance, rateOfChange, fx) << '\n';
-		cout << "\n\t\tWould you like to input another value?\n";
-		cout << "\n\t\t1. Yes\n";
-		cout << "\n\t\t2. No\n";
-		cout << "\n\t\tSelection: ";
-		cin >> menu2Selection;
-
-		switch (menu2Selection) {
-		case 1:
-			menu2(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
-		case 2:
-			balanceSet = false;
-			rateSet = false;
-			break;
-		}
+		menu3(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
 
 		break;
 
@@ -187,4 +142,107 @@ double getSolutionX(double initialBalance, double rateOfChange, double x) {
 	solution = (rateOfChange * x) + initialBalance;
 
 	return solution;
+}
+
+void generateProblem() {
+	int selection = 0;
+
+	cout << "\n\t\tWhat would you like to solve for?\n";
+	cout << "\n\t\t\t1. F(x)";
+	cout << "\n\t\t\t2. x";
+	cout << "\n\t\t\t3. b";
+	cout << "\n\t\t\t4. m";
+	cout << "\n\n\t\tSelection: ";
+	cin >> selection;
+
+	double fx = 1 + (rand() % 10000);
+	double x = 1 + (rand() % 1000);
+	double b = 1 + (rand() % 30000);
+	double m = 1 + (rand() % 100);
+	double solution = 0.0;
+
+	switch (selection) {
+	case 1:
+		cout << "\n\t\tSolve for F(x): ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\n\t\t\tF(x) = " << m << "(" << x << ") + " << b << "\n\n";
+		cout << "\n\t\t\tSolution: ";
+		cin >> solution;
+		cout << "\n\n";
+		break;
+	case 2:
+		cout << "\n\t\tSolve for x: ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\n\t\t\t" << fx << " = " << m << "(x) + " << b << "\n\n";
+		cout << "\n\t\t\tSolution: ";
+		cin >> solution;
+		cout << "\n\n";
+		break;
+	case 3:
+		cout << "\n\t\tSolve for b: ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\n\t\t\t" << fx << " = " << m << "(" << x << ") + " << "b" << "\n\n";
+		cout << "\n\t\t\tSolution: ";
+		cin >> solution;
+		cout << "\n\n";
+		break;
+	case 4:
+		cout << "\n\t\tSolve for m: ( ROUND TO THE NEARST THOUSANDTHS )";
+		cout << "\n\n\t\t\t" << fx << " = " << "m" << "(" << x << ") + " << b << "\n\n";
+		cout << "\n\t\t\tSolution: ";
+		cin >> solution;
+		cout << "\n\n";
+		break;
+	}
+
+	checkSolution(fx, x, b, m, selection, solution);
+
+}
+
+void checkSolution(double fx, double x, double b, double m, int selection, double solution) {
+	double solvedProblem = 0.0;
+	bool correct = false;
+
+	switch (selection) {
+	case 1:
+		solvedProblem = (m * x) + b;
+		correct = solvedProblem == solution;
+		break;
+	case 2:
+		solvedProblem = (fx - b) / m;
+		correct = solvedProblem == solution;
+		break;
+	case 3:
+		solvedProblem = fx / (m * x);
+		correct = solvedProblem == solution;
+		break;
+	case 4:
+		solvedProblem = (fx - b) / x;
+		correct = solvedProblem == solution;
+		break;
+	}
+
+	if (correct) {
+		cout << "\n\t\tCONGRATULATIONS!!! You got it right!\n";
+	}
+	else {
+		cout << "\n\t\tOUCH!!! Better luck next time!\n";
+		cout << "\n\t\tThe correct answer is: " << solvedProblem << '\n';
+	}
+}
+
+void menu3(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange) {
+
+	int menu3Selection = 0;
+	cout << "\n\t\tWould you like to input another value?\n";
+	cout << "\n\t\t1. Yes\n";
+	cout << "\n\t\t2. No\n";
+	cout << "\n\t\tSelection: ";
+	cin >> menu3Selection;
+
+	switch (menu3Selection) {
+	case 1:
+		menu2(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
+	case 2:
+		balanceSet = false;
+		rateSet = false;
+		break;
+	}
 }
