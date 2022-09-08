@@ -6,12 +6,10 @@ using namespace std;
 
 void menu1();
 void printFunction();
-void menu2(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange);
 double getSolutionFx(double initialBalance, double rateOfChange, double fx);
 double getSolutionX(double initialBalance, double rateOfChange, double x);
 void generateProblem();
 void checkSolution(double fx, double x, double b, double m, int selection, double solution);
-void menu3(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange);
 
 /********** MAIN **********/
 
@@ -69,66 +67,6 @@ void printFunction() {
 	cout << "\n\t\t\tF(x) = " << rateOfChange << "x + " << initialBalance << "\n\n";
 }
 
-void menu2(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange) {
-	int menu2Selection = 0;
-
-	cout << "\n\tPlease select from the following options:\n";
-	cout << "\n\t\t1. Input value for F(x) and solve for x.";
-	cout << "\n\t\t2. Input value for x and solve for F(x).";
-	cout << "\n\t\t3. Create a new function.";
-	cout << "\n\t\t4. Exit Program.\n";
-	cout << "\n\t\tSelection: ";
-	cin >> menu2Selection;
-
-	switch (menu2Selection) {
-	case 1:
-		double fx;
-
-		cout << "\n\t\tPlease provide an integer value for F(x): ";
-		cin >> fx;
-
-		cout << "\n\t\t\tx = " << getSolutionFx(initialBalance, rateOfChange, fx) << '\n';
-		menu3(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
-
-		break;
-
-	case 2:
-		double x;
-
-		cout << "\n\t\tPlease provide an integer value for x: ";
-		cin >> x;
-
-		cout << "\n\t\t\tF(x) = " << getSolutionX(initialBalance, rateOfChange, x) << '\n';
-
-		cout << "\n\t\tWould you like to input another value?\n";
-		cout << "\n\t\t1. Yes\n";
-		cout << "\n\t\t2. No\n";
-		cout << "\n\t\tSelection: ";
-		cin >> menu2Selection;
-
-		switch (menu2Selection) {
-		case 1:
-			menu2(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
-		case 2:
-			balanceSet = false;
-			rateSet = false;
-			break;
-		}
-
-		break;
-
-	case 3:
-		balanceSet = false;
-		rateSet = false;
-		break;
-
-	case 4:
-		cout << "\t\t\n\nEXITING PROGRAM.\n\n";
-		continueProgram = false;
-		break;
-	}
-}
-
 double getSolutionFx(double initialBalance, double rateOfChange, double fx) {
 	double solution = 0;
 
@@ -159,7 +97,7 @@ void generateProblem() {
 	double fx = 1 + (rand() % 10000);
 	double x = 1 + (rand() % 1000);
 	double b = 1 + (rand() % 30000);
-	double m = (1 + (rand() % 10))/2.5;
+	double m = (1 + (rand() % 10)) / 2.5;
 	double solution = 0.0;
 
 	switch (selection) {
@@ -227,24 +165,5 @@ void checkSolution(double fx, double x, double b, double m, int selection, doubl
 	else {
 		cout << "\n\t\tOUCH!!! Better luck next time!\n";
 		cout << "\n\t\tThe correct answer is: " << solvedProblem << '\n';
-	}
-}
-
-void menu3(bool& balanceSet, bool& rateSet, bool& continueProgram, double initialBalance, double rateOfChange) {
-
-	int menu3Selection = 0;
-	cout << "\n\t\tWould you like to input another value?\n";
-	cout << "\n\t\t1. Yes\n";
-	cout << "\n\t\t2. No\n";
-	cout << "\n\t\tSelection: ";
-	cin >> menu3Selection;
-
-	switch (menu3Selection) {
-	case 1:
-		menu2(balanceSet, rateSet, continueProgram, initialBalance, rateOfChange);
-	case 2:
-		balanceSet = false;
-		rateSet = false;
-		break;
 	}
 }
